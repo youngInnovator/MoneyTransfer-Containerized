@@ -28,15 +28,16 @@ public class UserTransactions {
     @ManyToOne(optional = false)
     @JoinColumn(name = "accountId")
     @JsonBackReference
-    private Account accountNumber;
+    private Account userAccount;
 
 
-    public UserTransactions(LocalDateTime dateTime, double debitedAmount, double creditedAmount, double balance, Account accountNumber) {
+    public UserTransactions(LocalDateTime dateTime, double amount, double transactionType, double accountBalance, String currencyType, Account userAccount) {
         this.dateTime = dateTime;
-        this.debitedAmount = debitedAmount;
-        this.creditedAmount = creditedAmount;
-        this.balance = balance;
-        this.accountNumber = accountNumber;
+        this.amount = amount;
+        this.transactionType = transactionType;
+        this.accountBalance = accountBalance;
+        this.currencyType = currencyType;
+        this.userAccount = userAccount;
     }
 
     public int getTransactionId() {
@@ -55,35 +56,44 @@ public class UserTransactions {
         this.dateTime = dateTime;
     }
 
-    public double getDebitedAmount() {
-        return debitedAmount;
+    public double getAmount() {
+        return amount;
     }
 
-    public void setDebitedAmount(double debitedAmount) {
-        this.debitedAmount = debitedAmount;
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
-    public double getCreditedAmount() {
-        return creditedAmount;
+    public double getTransactionType() {
+        return transactionType;
     }
 
-    public void setCreditedAmount(double creditedAmount) {
-        this.creditedAmount = creditedAmount;
+    public void setTransactionType(double transactionType) {
+        this.transactionType = transactionType;
     }
 
-    public double getBalance() {
-        return balance;
+    public double getAccountBalance() {
+        return accountBalance;
     }
 
-    public void setBalance(double balance) {
-        this.balance = balance;
+    public void setAccountBalance(double accountBalance) {
+        this.accountBalance = accountBalance;
     }
 
-    public Account getAccountNumber() {
-        return accountNumber;
+    public String getCurrencyType() {
+        return currencyType;
     }
 
-    public void setAccountNumber(Account accountNumber) {
-        this.accountNumber = accountNumber;
+    public void setCurrencyType(String currencyType) {
+        this.currencyType = currencyType;
+    }
+
+
+    public Account getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(Account userAccount) {
+        this.userAccount = userAccount;
     }
 }

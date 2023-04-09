@@ -28,7 +28,7 @@ public class Account  {
     private String accountCurrency ;
 
 
-    @OneToMany(mappedBy = "accountNumber", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<UserTransactions> transactionsList = new ArrayList<>();
 
