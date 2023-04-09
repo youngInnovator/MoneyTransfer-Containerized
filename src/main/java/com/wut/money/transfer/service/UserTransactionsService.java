@@ -19,7 +19,9 @@ public interface UserTransactionsService {
 
     public void transferAmountToOtherAccount(TransferRequestDTO transferRequest);
 
-    public void transferMoneyToOtherAccount(TransferRequestDTO transferRequest);
+    public List<UserTransactions> getAllDebitedAmount(int accountId);
+
+    public List<UserTransactions> getAllCreditedAmount(int accountId);
 
 
 

@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface UserTransactionsRepository extends JpaRepository<UserTransactions, Integer> {
 
-    public List<UserTransactions> findAllByAccountNumber(Account account);
+    public List<UserTransactions> findAllByUserAccount(Account account);
 }

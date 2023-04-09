@@ -89,7 +89,7 @@ public class AccountServiceImpl implements AccountService {
         if(optionalAccount.isPresent()){
             Account updateAccount = optionalAccount.get();
 
-            updateAccount.setAccountBalance(account.getAccountBalance());
+            updateAccount.setAccountBalance(updateAccount.getAccountBalance() + account.getAccountBalance());
             updateAccount.setAccountCurrency(account.getAccountCurrency());
 
             List<UserTransactions> transactions = account.getTransactionsList();
@@ -144,7 +144,7 @@ public class AccountServiceImpl implements AccountService {
         if(optionalAccount.isPresent()){
             Account account = optionalAccount.get();
             double accountBalance = account.getAccountBalance();
-            accountBalance += amount;
+            accountBalance = accountBalance + amount;
 
             account.setAccountBalance(accountBalance);
             this.accountRepository.save(account);
@@ -162,8 +162,8 @@ public class AccountServiceImpl implements AccountService {
         if(optionalAccount.isPresent()){
             Account account = optionalAccount.get();
             double accountBalance = account.getAccountBalance();
-            if(accountBalance >= amount){
-                accountBalance -= amount;
+            if(accountBalance > amount){
+                accountBalance = accountBalance - amount;
             }else{
                 throw new BalanceLessThanWithdrawAmountException();
             }

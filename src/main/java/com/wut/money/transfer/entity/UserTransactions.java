@@ -3,6 +3,8 @@ package com.wut.money.transfer.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import java.time.LocalDateTime;
 
@@ -16,22 +18,23 @@ import java.time.LocalDateTime;
 public class UserTransactions {
     @Id
     @GeneratedValue(generator = "trans-seq")
-    @SequenceGenerator(name = "tran-seq",sequenceName = "tran-seq",allocationSize = 8000,initialValue = 1)
+    @SequenceGenerator(name = "tran-seq",sequenceName = "tran-seq",initialValue = 2000, allocationSize = 1)
     private int transactionId;
     private LocalDateTime dateTime;
     private double amount;
-    private double transactionType;
+    private String transactionType;
     private double accountBalance;
     private  String currencyType;
 
 
-    @ManyToOne(optional = false)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "accountId")
     @JsonBackReference
     private Account userAccount;
 
 
-    public UserTransactions(LocalDateTime dateTime, double amount, double transactionType, double accountBalance, String currencyType, Account userAccount) {
+    public UserTransactions(LocalDateTime dateTime, double amount, String transactionType, double accountBalance, String currencyType, Account userAccount) {
         this.dateTime = dateTime;
         this.amount = amount;
         this.transactionType = transactionType;
@@ -64,11 +67,11 @@ public class UserTransactions {
         this.amount = amount;
     }
 
-    public double getTransactionType() {
+    public String getTransactionType() {
         return transactionType;
     }
 
-    public void setTransactionType(double transactionType) {
+    public void setTransactionType(String transactionType) {
         this.transactionType = transactionType;
     }
 
@@ -87,7 +90,6 @@ public class UserTransactions {
     public void setCurrencyType(String currencyType) {
         this.currencyType = currencyType;
     }
-
 
     public Account getUserAccount() {
         return userAccount;
