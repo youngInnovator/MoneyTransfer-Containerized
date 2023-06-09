@@ -8,10 +8,10 @@ services:
     networks:
       - banking-net
     environment:
-      - MYSQL_ROOT_PASSWORD=root1234
-      - MYSQL_DATABASE=banking_app
-      - MYSQL_USER=bankingappuser
-      - MYSQL_PASSWORD=bankingapppassword
+      - MYSQL_ROOT_PASSWORD=${MYSQLDB_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQLDB_DATABASE}
+      - MYSQL_USER=${MYSQLDB_USER}
+      - MYSQL_PASSWORD=${MYSQLDB_PASSWORD}
     volumes:
       - db:/var/lib/mysql
   app:
@@ -22,12 +22,12 @@ services:
     networks:
       - banking-net
     ports:
-      - 8080:8080
+      - ${SPRING_LOCAL_PORT}:${SPRING_DOCKER_PORT}
     environment:
       SPRING_APPLICATION_JSON: '{
-        "spring.datasource.url"  : "jdbc:mysql://mysqldb:3306/banking_app?useSSL=false",
-        "spring.datasource.username" : "bankingappuser",
-        "spring.datasource.password" : "bankingapppassword",
+        "spring.datasource.url"  : "jdbc:mysql://${MYSQLDB_HOST}:${MYSQLDB_PORT}/${MYSQLDB_DATABASE}?useSSL=false",
+        "spring.datasource.username" : "${MYSQLDB_USER}",
+        "spring.datasource.password" : "${MYSQLDB_PASSWORD}",
         "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQLDialect",
         "spring.jpa.hibernate.ddl-auto" : "update"
       }'
