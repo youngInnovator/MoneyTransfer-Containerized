@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
 @Table
 public class UserTransactions {
     @Id
-    @GeneratedValue(generator = "trans-seq")
-    @SequenceGenerator(name = "tran-seq",sequenceName = "tran-seq",initialValue = 2000, allocationSize = 1)
+    @GeneratedValue(generator = "trans_seq")
+    @SequenceGenerator(name = "tran_seq",sequenceName = "tran_seq",initialValue = 2000, allocationSize = 1)
     private int transactionId;
     private LocalDateTime dateTime;
     private double amount;

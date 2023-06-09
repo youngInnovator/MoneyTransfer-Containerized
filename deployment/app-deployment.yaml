@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: banking-app-spring
+  labels:
+    app: banking-app-spring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: banking-app-spring
+  template:
+    metadata:
+      labels:
+        app: banking-app-spring
+    spec:
+      containers:
+        - name: banking-app-spring
+          image: bank_app
+          imagePullPolicy: Never
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-pass
+                  key: mysql-user-password
+            - name: DB_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name:  mysql-config-map
+                  key: mysql-server
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name:  mysql-config-map
+                  key: mysql-database-name
+            - name: DB_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config-map
+                  key: mysql-user-username
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: banking-app-spring
+  labels:
+    app: banking-app-spring
+spec:
+  type: LoadBalancer
+  selector:
+    app: banking-app-spring
+  ports:
+    - protocol: TCP
+      name: http
+      port: 8080
+      targetPort: 8080
+      nodePort: 30000
